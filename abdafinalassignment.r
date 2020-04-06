@@ -122,3 +122,21 @@ Theme14 = merged %>% dplyr:: select(c('GUID','OBJECTID','NUTS1','NUTS1NAME','NUT
 Theme15 = merged %>% dplyr:: select(c('GUID','OBJECTID','NUTS1','NUTS1NAME','NUTS2','NUTS2NAME','NUTS3','NUTS3NAME',
                                      'COUNTY','COUNTYNAME','EDNAME') | starts_with('T15_'))
 
+
+
+
+#### I'm considering examining commuters in Limerick, Waterford , and Galway for comparison
+Theme11LimWa =  Theme11 %>% filter(COUNTYNAME== 'Waterford City and County' | COUNTYNAME == 'Limerick City and County')
+
+
+### Columns Selected for Satistical Analysis, total population, stats on commuting methods, start time of commute and commute time length
+ColsOfInterestSection11 = c('T8_1_WT','T8_1_ST','T8_1_TT','T11_1_TW','T11_1_TS','T11_1_FT', 'T11_1_BIT', 'T11_1_BUT', 'T11_1_TDLT', 'T11_1_MT', 'T11_1_CDT', 
+'T11_1_CPT', 'T11_1_VT', 'T11_2_T1', 'T11_2_T2','T11_2_T3','T11_2_T4','T11_2_T5','T11_2_T6','T11_2_T7','T11_2_T8','T11_3_D1','T11_3_D2','T11_3_D3','T11_3_D4','T11_3_D5','T11_3_D6')
+
+Theme8LimWa = Theme8 %>% filter(COUNTYNAME== 'Waterford City and County' | COUNTYNAME == 'Limerick City and County')
+Theme8LimWa = Theme8LimWa %>% dplyr::select(c('GUID','T8_1_WT','T8_1_ST','T8_1_TT'))
+mergedCommuteAndTotalPop = merge.data.frame(Theme11LimWa, Theme8LimWa, by='GUID')
+
+
+#### We have desired commuter data on Limerick and Waterford for examination
+WorkAgainstStudent = mergedCommuteAndTotalPop %>% dplyr::select('GUID', 'COUNTYNAME','EDNAME', 'T8_1_WT','T8_1_ST')
